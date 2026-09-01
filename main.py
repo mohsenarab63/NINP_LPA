@@ -23,7 +23,16 @@ if __name__ == '__main__':
     #     print(data_name)
     #     file = f"./LFR/n=100000/{data_name}/network.dat"
     #     grouth_file = f"./LFR/n=100000/{data_name}/community.dat"
-    #     ground_truth = load_lfr_communities(grouth_file)
+    #     ground_truth = load_lfr_communities(grouth_file) # 
+
+    ## Important Note about load_lfr_communities(grouth_file)  [Possible Big Mistakes]::
+    # load_lfr_communities(grouth_file) function uses 'community.dat' file, but inside the function , it uses load_graph(path) which its path argument
+    # is the path to the 'community.dat' file, not 'network.dat' file. However, in load_graph(path) function (which used in load_lfr_communities(grouth_file) function) , 
+    #you treated content of the path ('community.dat' file) as pair 
+    # of vertices which is absolutely wrong ('community.dat' file contains "node node_community" pairs, not "node1 node2" pair ).
+    #Also, in the rest of load_lfr_communities(grouth_file) file, after calling load_graph(path), you only
+    # considered leaf nodes! why? Also Note that the G = load_graph(path) in load_lfr_communities(grouth_file) is in fact community file, not network file
+    
     #     my_graph = my_Graph()
     #     G = my_graph.createGraph(file)
     #     start_time = time.time()
